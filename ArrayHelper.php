@@ -3,11 +3,14 @@ namespace mgcode\helpers;
 
 class ArrayHelper extends \yii\helpers\ArrayHelper
 {
+    const TRIM_BEGINNING = 1;
+    const TRIM_END = 2;
+    const TRIM_BOTH = 3;
+
     /**
-     * Sets array key from sub array column
-     * Usually used for db results.
+     * Sets array keys from column
      * @param array $array
-     * @param       $column
+     * @param string|\Closure $column
      * @return array
      */
     public static function setKeyFromColumn(array $array, $column)
@@ -18,19 +21,21 @@ class ArrayHelper extends \yii\helpers\ArrayHelper
     }
 
     /**
-     * Trims array from start and end by percents
+     * Trims array by percents
      * @param array $array
      * @param float $trimmedPercent
+     * @param int $position
      * @return array
      */
-    public static function trimSidesByPercents(array $array, $trimmedPercent = 0.1)
+    public static function trimByPercents(array $array, $trimmedPercent = 0.1, $position = self::TRIM_BOTH)
     {
         $g = $trimmedPercent * count($array);
         $g = floor($g);
 
         // Trim values if we have to trim
         if ($g) {
-            $array = array_slice($array, $g, (count($array) - $g * 2));
+            $offset = in_array($position, [static::TRIM_BEGINNING, static::TRIM_BOTH]) ? $g : 0;
+            $array = array_slice($array, $offset, (count($array) - $g * 2));
         }
 
         return $array;
