@@ -4,7 +4,7 @@ namespace mgcode\helpers;
 class MathHelper
 {
     /**
-     * Counts average value from list of values
+     * Counts an average value from a list of values
      * @param array $values
      * @return float
      */
@@ -14,7 +14,7 @@ class MathHelper
     }
 
     /**
-     * Calculates trimmed mean, removes percent of values from beginning and end
+     * Calculates a trimmed mean, removes percent of values from beginning and end
      * @param array $values
      * @param float $trimmedMeanPercent
      * @return float
@@ -30,7 +30,7 @@ class MathHelper
     }
 
     /**
-     * Calculates median from list of values
+     * Calculates a median from a list of values
      * @param $values
      * @return float
      */
