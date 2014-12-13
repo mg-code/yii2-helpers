@@ -35,7 +35,13 @@ class ArrayHelper extends \yii\helpers\ArrayHelper
         // Trim values if we have to trim
         if ($g) {
             $offset = in_array($position, [static::TRIM_BEGINNING, static::TRIM_BOTH]) ? $g : 0;
-            $array = array_slice($array, $offset, (count($array) - $g * 2));
+            $length = null;
+            if ($position == static::TRIM_END) {
+                $length = count($array) - $g;
+            } else if ($position == static::TRIM_BOTH) {
+                $length = count($array) - $g * 2;
+            }
+            $array = array_slice($array, $offset, $length);
         }
 
         return $array;
