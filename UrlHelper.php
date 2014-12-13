@@ -41,10 +41,10 @@ class UrlHelper extends \yii\helpers\Url
         // Build new URL
         $cleanUrl = isset($parseUrl['scheme']) ? $parseUrl['scheme'].'://' : '';
         $cleanUrl .= isset($parseUrl['host']) ? $parseUrl['host'] : '';
-        $cleanUrl .= isset($parseUrl['port']) ? ':'.$parseUrl['port'] : null;
-        $cleanUrl .= isset($parseUrl['path']) ? $parseUrl['path'] : null;
-        $cleanUrl .= $query ? '?'.http_build_query($query) : null;
-        $cleanUrl .= isset($parseUrl['fragment']) ? '#'.$parseUrl['fragment'] : null;
+        $cleanUrl .= isset($parseUrl['port']) ? ':'.$parseUrl['port'] : '';
+        $cleanUrl .= isset($parseUrl['path']) ? $parseUrl['path'] : '';
+        $cleanUrl .= $query ? '?'.http_build_query($query) : '';
+        $cleanUrl .= isset($parseUrl['fragment']) ? '#'.$parseUrl['fragment'] : '';
 
         return $cleanUrl;
     }
