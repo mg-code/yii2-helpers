@@ -40,9 +40,9 @@ class DbHelper extends \yii\base\Component
         $attributes = print_r($model->attributes, true);
 
         $error = [
-            "Failed to save: '{$className}'.",
-            "Errors: {$errors}.",
-            "Attributes: {$attributes}."
+            "Failed to save: '{$className}'",
+            "Errors: {$errors}",
+            "Attributes: {$attributes}"
         ];
 
         throw new \yii\db\Exception(implode(" \r\n", $error));
