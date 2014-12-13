@@ -1,6 +1,6 @@
 {
     "name": "mg-code/yii2-helpers",
-    "description": "A collection of useful helper classes for Yii2",
+    "description": "A collection of useful helper classes for Yii framework 2.0",
     "keywords": ["yii", "yii2", "extension", "helper", "time", "array", "db", "database", "math", "request", "string", "url"],
     "homepage": "https://github.com/mg-code/yii2-helpers",
     "type": "yii2-extension",
