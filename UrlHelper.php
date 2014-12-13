@@ -18,7 +18,7 @@ class UrlHelper extends \yii\helpers\Url
     }
 
     /**
-     * Add's parameters to url string.
+     * Appends new parameters to url.
      * Overrides existing parameters with new ones.
      * @param string $url
      * @param array $params
