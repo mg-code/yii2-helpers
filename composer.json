@@ -1,0 +1,23 @@
+{
+    "name": "mg-code/yii2-helpers",
+    "description": "A collection of useful helper classes for Yii2",
+    "keywords": ["yii", "yii2", "extension", "helper", "time", "array", "db", "database", "math", "request", "string", "url"],
+    "homepage": "https://github.com/mg-code/yii2-helpers",
+    "type": "yii2-extension",
+    "license": "BSD 3-Clause",
+    "authors": [
+        {
+            "name": "Maris Graudins",
+			"role": "Developer"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "yiisoft/yii2": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "mgcode\\helpers\\": ""
+        }
+    }
+}
