@@ -27,30 +27,48 @@ class UrlHelper extends \yii\helpers\Url
     public static function addParamsToUrl($url, $params)
     {
         // Parse url
-        $parseUrl = parse_url($url);
+        $parsedUrl = parse_url($url);
 
         // Parse existing parameters
         $query = [];
-        if (isset($parseUrl['query'])) {
-            $query = static::parseUrlQuery($parseUrl['query']);
+        if (isset($parsedUrl['query'])) {
+            $query = static::parseUrlQuery($parsedUrl['query']);
         }
 
         // Append new queries and override existing ones
         $query = array_merge($query, $params);
 
-        // Build new URL
-        $cleanUrl = isset($parseUrl['scheme']) ? $parseUrl['scheme'].'://' : '';
-        $cleanUrl .= isset($parseUrl['host']) ? $parseUrl['host'] : '';
-        $cleanUrl .= isset($parseUrl['port']) ? ':'.$parseUrl['port'] : '';
-        $cleanUrl .= isset($parseUrl['path']) ? $parseUrl['path'] : '';
-        $cleanUrl .= $query ? '?'.http_build_query($query) : '';
-        $cleanUrl .= isset($parseUrl['fragment']) ? '#'.$parseUrl['fragment'] : '';
+        return static::_buildUrl($parsedUrl, $query);
+    }
 
-        return $cleanUrl;
+    /**
+     * Removes parameter from url query
+     * @param string $url
+     * @param string|array $key Can be an array of keys
+     * @return string
+     */
+    public static function removeParamFromUrl($url, $key)
+    {
+        if (!$url) {
+            return $url;
+        }
+
+        // Parse url and query
+        $parsedUrl = parse_url($url);
+        $query = isset($parsedUrl['query']) ? static::parseUrlQuery($parsedUrl['query']) : [];
+
+        // Remove keys
+        $key = is_array($key) ? $key : [$key];
+        foreach ($key as $val) {
+            unset($query[$val]);
+        }
+
+        return static::_buildUrl($parsedUrl, $query);
     }
 
     /**
      * Parses url query to parameters
+     * This function keeps dots. By default parse_str converts dots to underscores.
      * @param $query
      * @return array
      */
@@ -63,5 +81,24 @@ class UrlHelper extends \yii\helpers\Url
         parse_str($data, $values);
 
         return array_combine(array_map('hex2bin', array_keys($values)), $values);
+    }
+
+    /**
+     * Builds url from parameters
+     * @param mixed $parsedUrl
+     * @param array $query
+     * @static
+     * @return string
+     */
+    protected static function _buildUrl($parsedUrl, array $query)
+    {
+        $cleanUrl = isset($parsedUrl['scheme']) ? $parsedUrl['scheme'].'://' : '';
+        $cleanUrl .= isset($parsedUrl['host']) ? $parsedUrl['host'] : '';
+        $cleanUrl .= isset($parsedUrl['port']) ? ':'.$parsedUrl['port'] : '';
+        $cleanUrl .= isset($parsedUrl['path']) ? $parsedUrl['path'] : '';
+        $cleanUrl .= $query ? '?'.http_build_query($query) : '';
+        $cleanUrl .= isset($parsedUrl['fragment']) ? '#'.$parsedUrl['fragment'] : '';
+
+        return $cleanUrl;
     }
 }
