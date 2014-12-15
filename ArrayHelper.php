@@ -46,4 +46,37 @@ class ArrayHelper extends \yii\helpers\ArrayHelper
 
         return $array;
     }
+
+    /**
+     * Sorts arrays in specific order by column values
+     * @param array $objects
+     * @param string|\Closure $column key name of the array element, or property name of the object,
+     * @param array $keys
+     */
+    public static function sortByColumnSpecific(array &$objects, $column, array $keys)
+    {
+        // We flip the array and use isset instead of in_array. Isset performs much faster.
+        $keys = array_flip($keys);
+
+        // Match array column to keys and organize objects into sub-arrays.
+        // This is needed, because otherwise we need to iterate all objects for all keys.
+        $organize = array();
+        foreach ($objects as $k => $object) {
+            $val = static::getValue($object, $column);
+            if (isset($keys[$val])) {
+                $index = $keys[$val];
+                $organize[$index][] = $object;
+                unset($objects[$k]);
+            }
+        }
+
+        // Sort organized array
+        ksort($organize, SORT_NUMERIC);
+
+        // Merge all sub arrays
+        $result = call_user_func_array('array_merge', $organize);
+
+        // Override the variable and merge with unsorted values
+        $objects = array_merge($result, $objects);
+    }
 }
