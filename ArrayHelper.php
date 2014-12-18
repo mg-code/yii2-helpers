@@ -8,19 +8,6 @@ class ArrayHelper extends \yii\helpers\ArrayHelper
     const TRIM_BOTH = 3;
 
     /**
-     * Sets array keys from column
-     * @param array $array
-     * @param string|\Closure $column
-     * @return array
-     */
-    public static function setKeyFromColumn(array $array, $column)
-    {
-        return static::map($array, $column, function ($object) {
-            return $object;
-        });
-    }
-
-    /**
      * Trims array by percents
      * @param array $array
      * @param float $trimmedPercent

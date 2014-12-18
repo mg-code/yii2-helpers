@@ -261,21 +261,19 @@ class TimeHelper
     }
 
     /**
-     * Return time difference between two times.
-     * @param int $start
-     * @param null|int $end If not set, current microtime will be used.
-     * @return string
+     * Return time difference between two timestamps with microseconds.
+     * @param float $start
+     * @param null|float $end If not set, current microtime will be used.
+     * @return float Returns difference in seconds
      */
     public static function difference($start, $end = null)
     {
         if ($end === null) {
             $end = microtime(true);
         }
-        $format = 'H:i:s.u';
-        $diffTime = $end - $start;
-        $timestamp = floor($diffTime);
-        $mSec = round(($diffTime - $timestamp) * 1000000);
-        return date(preg_replace('`(?<!\\\\)u`', $mSec, $format), $timestamp);
+
+        $totalTime = ($end - $start);
+        return $totalTime;
     }
 
     /**
