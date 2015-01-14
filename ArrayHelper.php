@@ -47,7 +47,7 @@ class ArrayHelper extends \yii\helpers\ArrayHelper
 
         // Match array column to keys and organize objects into sub-arrays.
         // This is needed, because otherwise we need to iterate all objects for all keys.
-        $organize = array();
+        $organize = [];
         foreach ($objects as $k => $object) {
             $val = static::getValue($object, $column);
             if (isset($keys[$val])) {
@@ -57,13 +57,15 @@ class ArrayHelper extends \yii\helpers\ArrayHelper
             }
         }
 
-        // Sort organized array
-        ksort($organize, SORT_NUMERIC);
+        if ($organize) {
+            // Sort organized array
+            ksort($organize, SORT_NUMERIC);
 
-        // Merge all sub arrays
-        $result = call_user_func_array('array_merge', $organize);
+            // Merge all sub arrays
+            $result = call_user_func_array('array_merge', $organize);
 
-        // Override the variable and merge with unsorted values
-        $objects = array_merge($result, $objects);
+            // Override the variable and merge with unsorted values
+            $objects = array_merge($result, $objects);
+        }
     }
 }
