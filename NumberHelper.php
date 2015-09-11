@@ -34,4 +34,79 @@ class NumberHelper
 
         return $guid;
     }
+
+    /**
+     * Returns the next highest float value by rounding up value if necessary.
+     * @param float $number
+     * @param int $decimals
+     * @return float
+     */
+    public static function ceil($number, $decimals = 0)
+    {
+        $x = str_pad('1', 1 + $decimals, '0', STR_PAD_RIGHT);
+        $result = ceil($number * $x) / $x;
+
+        // Fix decimal places precision
+        return round($result, $decimals);
+    }
+
+    /**
+     * Returns the next lowest float value by rounding up value if necessary.
+     * @param float $number
+     * @param int $decimals
+     * @return float
+     */
+    public static function floor($number, $decimals = 0)
+    {
+        $x = str_pad('1', 1 + $decimals, '0', STR_PAD_RIGHT);
+        $result = floor($number * $x) / $x;
+
+        // Fix decimal places precision
+        return round($result, $decimals);
+    }
+
+    /**
+     * Returns percentage from number
+     * @param float $number
+     * @param float $percents
+     * @return float
+     */
+    public static function getPercentage($number, $percents)
+    {
+        return $number / 100 * $percents;
+    }
+
+    /**
+     * Increase number by percents
+     * @param float $number
+     * @param float $percents
+     * @return float
+     */
+    public static function increaseByPercentage($number, $percents)
+    {
+        return $number + static::getPercentage($number, $percents);
+    }
+
+    /**
+     * Increase number by percents
+     * @param float $number
+     * @param float $percents
+     * @return float
+     */
+    public static function decreaseByPercentage($number, $percents)
+    {
+        return $number - static::getPercentage($number, $percents);
+    }
+
+    /**
+     * Calculate original figure when a percentage increase has been added
+     * @param float $number
+     * @param float $percents
+     * @return float
+     */
+    public static function removeIncreasedPercentage($number, $percents)
+    {
+        $x = 1 + ($percents / 100);
+        return $number / $x;
+    }
 }
