@@ -94,7 +94,7 @@ class RequestHelper extends \yii\base\Component
      * @param bool $returnDefault Whether to return default address if not found
      * @return string
      */
-    public function getUserIpForwarded($returnDefault = false)
+    public static function getUserIpForwarded($returnDefault = false)
     {
         $varsToCheck = array('HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED');
         foreach ($varsToCheck as $key) {
