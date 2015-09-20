@@ -51,7 +51,7 @@ class NumberHelper
     }
 
     /**
-     * Returns the next lowest float value by rounding up value if necessary.
+     * Returns the next lowest float value by rounding down value if necessary.
      * @param float $number
      * @param int $decimals
      * @return float
