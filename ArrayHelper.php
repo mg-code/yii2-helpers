@@ -8,6 +8,18 @@ class ArrayHelper extends \yii\helpers\ArrayHelper
     const TRIM_BOTH = 3;
 
     /**
+     * Returns sum of the values of a specified column in an array.
+     * The input array should be multidimensional or an array of objects.
+     * @param array $array
+     * @param string|\Closure $name
+     * @return number
+     */
+    public static function getColumnSum(array $array, $name) {
+        $values = static::getColumn($array, $name);
+        return array_sum($values);
+    }
+
+    /**
      * Trims array by percents
      * @param array $array
      * @param float $trimmedPercent
