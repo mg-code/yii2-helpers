@@ -80,6 +80,7 @@ class RequestHelper extends \yii\base\Component
      */
     public static function isPublicIp($ip, $matchIpv6 = true)
     {
+        $ip = trim($ip);
         if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false) {
             return true;
         } else if ($matchIpv6 && filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6 | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false) {
