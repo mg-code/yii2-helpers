@@ -8,6 +8,24 @@ class ArrayHelper extends \yii\helpers\ArrayHelper
     const TRIM_BOTH = 3;
 
     /**
+     * Renames array column name
+     * @param array $array
+     * @param string $oldName
+     * @param string $newName
+     * @return array
+     */
+    public static function renameColumn(array $array, $oldName, $newName)
+    {
+        $result = [];
+        foreach($array as $key => $val) {
+            $val[$newName] = $val[$oldName];
+            unset($val[$oldName]);
+            $result[$key] = $val;
+        }
+        return $result;
+    }
+
+    /**
      * Returns sum of the values of a specified column in an array.
      * The input array should be multidimensional or an array of objects.
      * @param array $array
