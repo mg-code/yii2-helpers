@@ -91,7 +91,39 @@ mgcode.helpers = (function ($) {
         }
     };
 
+    var requestHelper = {
+        ajaxError: function (XHR, textStatus) {
+            var err;
+            if (XHR.readyState === 0 || XHR.status === 0) {
+                return;
+            }
+            switch (textStatus) {
+                case 'timeout':
+                    err = 'The request timed out!';
+                    break;
+                case 'parsererror':
+                    err = 'Parser error!';
+                    break;
+                case 'error':
+                    if (XHR.status && !/^\s*$/.test(XHR.status)) {
+                        err = 'Error ' + XHR.status;
+                    } else {
+                        err = 'Error';
+                    }
+                    if (XHR.responseText && !/^\s*$/.test(XHR.responseText)) {
+                        err = err + ': ' + XHR.responseText;
+                    }
+                    break;
+            }
+
+            if (err) {
+                alert(err);
+            }
+        }
+    };
+
     return {
-        number: numberHelper
+        number: numberHelper,
+        request: requestHelper
     };
 })(jQuery);
