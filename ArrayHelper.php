@@ -8,6 +8,20 @@ class ArrayHelper extends \yii\helpers\ArrayHelper
     const TRIM_BOTH = 3;
 
     /**
+     * Removes array values
+     * @param array $array
+     * @param array|mixed $elements Can be array
+     * @return array
+     */
+    public static function removeValues(array $array, $elements)
+    {
+        if(!is_array($elements)) {
+            $elements = [$elements];
+        }
+        return array_diff($array, $elements);
+    }
+
+    /**
      * Renames array column name
      * @param array $array
      * @param string $oldName
