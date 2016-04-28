@@ -122,8 +122,33 @@ mgcode.helpers = (function ($) {
         }
     };
 
+    var urlHelper = {
+        /**
+         * Adds parameter to url, if parameter already exists replaces it
+         * @param url
+         * @param k
+         * @param v
+         * @returns string
+         */
+        addParam: function(url, k, v) {
+            if(typeof k == 'object') {
+                jQuery.each(k, function (k, v) {
+                    url = urlHelper.addParam(url, k, v);
+                });
+                return url;
+            }
+            var re = new RegExp("([?|&])" + k + "=.*?(&|$)", "i"),
+                separator = url.indexOf('?') !== -1 ? "&" : "?";
+            if (url.match(re)) {
+                return url.replace(re, '$1' + k + "=" + v + '$2');
+            }
+            return url + separator + k + "=" + v;
+        }
+    };
+
     return {
         number: numberHelper,
-        request: requestHelper
+        request: requestHelper,
+        url: urlHelper
     };
 })(jQuery);
