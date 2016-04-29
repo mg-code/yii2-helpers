@@ -130,8 +130,8 @@ mgcode.helpers = (function ($) {
          * @param v
          * @returns string
          */
-        addParam: function(url, k, v) {
-            if(typeof k == 'object') {
+        addParam: function (url, k, v) {
+            if (typeof k == 'object') {
                 jQuery.each(k, function (k, v) {
                     url = urlHelper.addParam(url, k, v);
                 });
@@ -146,9 +146,27 @@ mgcode.helpers = (function ($) {
         }
     };
 
+    var timeHelper = {
+        /**
+         * Returns time in 10:30 format
+         * @param timestamp
+         * @returns {string}
+         */
+        formatTime: function (timestamp) {
+            if(typeof timestamp == 'undefined') {
+                timestamp = Math.round(new Date().getTime() / 1000);
+            }
+            var date = new Date(timestamp * 1000),
+                hours = date.getHours(),
+                minutes = "0" + date.getMinutes();
+            return hours + ':' + minutes.substr(-2);
+        }
+    };
+
     return {
         number: numberHelper,
         request: requestHelper,
-        url: urlHelper
+        url: urlHelper,
+        time: timeHelper
     };
 })(jQuery);
