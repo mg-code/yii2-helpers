@@ -154,12 +154,24 @@ mgcode.helpers = (function ($) {
          */
         formatTime: function (timestamp) {
             if(typeof timestamp == 'undefined') {
-                timestamp = Math.round(new Date().getTime() / 1000);
+                timestamp = timeHelper.getTimestamp();
             }
             var date = new Date(timestamp * 1000),
                 hours = date.getHours(),
                 minutes = "0" + date.getMinutes();
             return hours + ':' + minutes.substr(-2);
+        },
+
+        /**
+         * Returns Unix timestamp
+         * @param date If null uses current date object
+         * @returns {number}
+         */
+        getTimestamp: function(date) {
+            if(typeof date == 'undefined') {
+                date = new Date();
+            }
+            return Math.round(date.getTime() / 1000);
         }
     };
 
