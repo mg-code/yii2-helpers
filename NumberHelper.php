@@ -66,6 +66,22 @@ class NumberHelper
     }
 
     /**
+     * Calculates percentage from two numbers
+     * @param float $original
+     * @param float $new
+     * @param bool $factor If enabled, `75%` will result in `0.75`.
+     * @return float
+     */
+    public static function calculatePercentage($original, $new, $factor = true)
+    {
+        $result = ($original - $new) / $original;
+        if(!$factor) {
+            $result *= 100;
+        }
+        return $result;
+    }
+
+    /**
      * Returns percentage from number
      * @param float $number
      * @param float $percents
