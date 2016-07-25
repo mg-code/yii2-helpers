@@ -8,6 +8,32 @@ class ArrayHelper extends \yii\helpers\ArrayHelper
     const TRIM_BOTH = 3;
 
     /**
+     * Returns the values of a specified value column in an array and groups by specified group column.
+     * @param array $array
+     * @param string|\Closure $groupColumn
+     * @param string|\Closure $valueColumn
+     * @param boolean $keepKeys whether to maintain the array keys. If false, the resulting array
+     * will be re-indexed with integers.
+     * @return array
+     */
+    public static function groupColumn(array $array, $groupColumn, $valueColumn, $keepKeys = true)
+    {
+        $result = [];
+        foreach ($array as $k => $element) {
+            $group = static::getValue($element, $groupColumn);
+            $value = static::getValue($element, $valueColumn);
+
+            if ($keepKeys) {
+                $result[$group][$k] = $value;
+            } else {
+                $result[$group][] = $value;
+            }
+        }
+        
+        return $result;
+    }
+
+    /**
      * Removes array values
      * @param array $array
      * @param array|mixed $elements Can be array
@@ -15,7 +41,7 @@ class ArrayHelper extends \yii\helpers\ArrayHelper
      */
     public static function removeValues(array $array, $elements)
     {
-        if(!is_array($elements)) {
+        if (!is_array($elements)) {
             $elements = [$elements];
         }
         return array_diff($array, $elements);
@@ -31,7 +57,7 @@ class ArrayHelper extends \yii\helpers\ArrayHelper
     public static function renameColumn(array $array, $oldName, $newName)
     {
         $result = [];
-        foreach($array as $key => $val) {
+        foreach ($array as $key => $val) {
             $val[$newName] = $val[$oldName];
             unset($val[$oldName]);
             $result[$key] = $val;
@@ -46,7 +72,8 @@ class ArrayHelper extends \yii\helpers\ArrayHelper
      * @param string|\Closure $name
      * @return number
      */
-    public static function getColumnSum(array $array, $name) {
+    public static function getColumnSum(array $array, $name)
+    {
         $values = static::getColumn($array, $name);
         return array_sum($values);
     }
