@@ -5,7 +5,7 @@ return [
     'sourcePath' => __DIR__.'/..',
     // string, required, root directory containing message translations.
     'messagePath' => __DIR__,
-    'languages' => ['lv'],
+    'languages' => ['lv', 'ru'],
     'translator' => 'Yii::t',
     // boolean, whether to sort messages by keys when merging new messages
     // with the existing ones. Defaults to false, which means the new (untranslated)
