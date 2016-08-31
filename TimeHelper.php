@@ -418,4 +418,18 @@ class TimeHelper
                 break;
         }
     }
+
+    /**
+     * Returns pretty readable month name.
+     * @param null|int $timestamp If not set, current timestamp will be used.
+     * @return string
+     */
+    public static function getPrettyMonthName($timestamp = null)
+    {
+        if ($timestamp === null) {
+            $timestamp = time();
+        }
+
+        return \Yii::$app->formatter->asDate($timestamp, 'MMMM');
+    }
 }
