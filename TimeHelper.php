@@ -377,7 +377,6 @@ class TimeHelper
 
         $month = date('n', $timestamp);
         $params = [
-            'weekday' =>  static::getPrettyWeekdayName($timestamp, false),
             'day' => date('j', $timestamp),
         ];
         switch($month) {
