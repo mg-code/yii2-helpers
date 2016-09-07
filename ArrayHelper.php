@@ -1,11 +1,44 @@
 <?php
 namespace mgcode\helpers;
 
+use yii\base\InvalidParamException;
+
 class ArrayHelper extends \yii\helpers\ArrayHelper
 {
     const TRIM_BEGINNING = 1;
     const TRIM_END = 2;
     const TRIM_BOTH = 3;
+
+    /**
+     * Performs circular shift
+     * @param array $array
+     * @param int $steps
+     * @param bool $shiftLeft
+     * @return array
+     */
+    public static function circularShift(array $array, $steps, $shiftLeft = false)
+    {
+        if(!is_int($steps)) {
+            throw new InvalidParamException('Steps has to be an (int)');
+        }
+        $count = count($array);
+        if($count == 0 || $steps == 0) {
+            return [];
+        }
+
+        if($shiftLeft) {
+            $steps *= -1;
+        }
+
+        $steps = $steps % $count;
+        $steps *= -1;
+
+        return array_merge(
+            array_slice($array, $steps),
+            array_slice($array, 0, $steps)
+        );
+    }
+
 
     /**
      * Returns the values of a specified value column in an array and groups by specified group column.
