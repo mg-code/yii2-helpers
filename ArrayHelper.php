@@ -23,7 +23,7 @@ class ArrayHelper extends \yii\helpers\ArrayHelper
         }
         $count = count($array);
         if($count == 0 || $steps == 0) {
-            return [];
+            return $array;
         }
 
         if($shiftLeft) {
