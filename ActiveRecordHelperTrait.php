@@ -2,6 +2,7 @@
 namespace mgcode\helpers;
 
 use Yii;
+use yii\base\InvalidParamException;
 use yii\db\BaseActiveRecord;
 
 /**
@@ -10,7 +11,6 @@ use yii\db\BaseActiveRecord;
  */
 trait ActiveRecordHelperTrait
 {
-
     /**
      * Saves ActiveRecord model or throw exception.
      *
@@ -31,5 +31,27 @@ trait ActiveRecordHelperTrait
         }
 
         DbHelper::throwSaveException($owner);
+    }
+
+    /**
+     * Returns a value indicating whether the any of named attributes has been changed.
+     * @param string $name the name of the attribute.
+     * @param boolean $identical whether the comparison of new and old value is made for
+     * identical values using `===`, defaults to `true`. Otherwise `==` is used for comparison.
+     * @return boolean whether any of attributes has been changed
+     */
+    public function isAnyAttributeChanged($attributes, $identical = true)
+    {
+        /** @var BaseActiveRecord $this */
+        if(!is_array($attributes)) {
+            throw new InvalidParamException('type of `attributes` must be array.');
+        }
+
+        foreach($attributes as $attribute) {
+            if($this->isAttributeChanged($attribute, $identical)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
