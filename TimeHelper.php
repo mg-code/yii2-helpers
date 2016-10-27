@@ -145,7 +145,7 @@ class TimeHelper
     public static function getHmsFromSeconds($seconds, $hideSeconds = false)
     {
         $hours = intval(intval($seconds) / 3600);
-        $hm = $hours;
+        $hm = str_pad($hours, 2, "0", STR_PAD_LEFT);
 
         $minutes = intval(($seconds / 60) % 60);
         $hm .= ':'.str_pad($minutes, 2, "0", STR_PAD_LEFT);
