@@ -158,6 +158,23 @@ class TimeHelper
     }
 
     /**
+     * Parses seconds from time (H:i:s) string.
+     * @param string $hms
+     * @return bool
+     */
+    public static function getSecondsFromHms($hms)
+    {
+        $pattern = '/^(?<hours>[\d]{1,2})\:(?<minutes>[\d]{1,2})\:(?<seconds>[\d]{1,2})/';
+        preg_match($pattern, $hms, $matches);
+        if (!$matches) {
+            return false;
+        }
+
+        $seconds = $matches['hours'] * 3600 + $matches['minutes'] * 60 + $matches['seconds'];
+        return $seconds;
+    }
+
+    /**
      * Returns ISO8601 full datetime
      * E.g.: 2014-12-14T09:31:12+00:00
      * @param null|int $timestamp If not set, current timestamp will be used.
@@ -247,7 +264,6 @@ class TimeHelper
 
         return date("Y-m-d", $timestamp);
     }
-
 
     /**
      * Return formatted week number.
@@ -339,14 +355,14 @@ class TimeHelper
             $timestamp = time();
         }
 
-        if($useAlternateNames) {
+        if ($useAlternateNames) {
             $date1 = new \DateTime(TimeHelper::getDate());
             $date2 = new \DateTime(TimeHelper::getDate($timestamp));
             $diff = $date2->diff($date1)->format("%a");
 
-            if($diff == 0) {
+            if ($diff == 0) {
                 return \Yii::t('mgcode/helpers', 'Today');
-            } else if($diff == 1) {
+            } else if ($diff == 1) {
                 return \Yii::t('mgcode/helpers', 'Tomorrow');
             }
         }
@@ -379,7 +395,7 @@ class TimeHelper
         $params = [
             'day' => date('j', $timestamp),
         ];
-        switch($month) {
+        switch ($month) {
             case 1:
                 return \Yii::t('mgcode/helpers', '{day} January', $params);
                 break;
