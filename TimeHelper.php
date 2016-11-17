@@ -448,4 +448,45 @@ class TimeHelper
 
         return \Yii::$app->formatter->asDate($timestamp, 'MMMM');
     }
+
+    /**
+     * Finds date gaps between given dates
+     * @param $dates
+     * @return array
+     */
+    public static function getMissingDates($dates)
+    {
+        if (count($dates) < 3) {
+            return [];
+        }
+        $min = min($dates);
+        $max = max($dates);
+
+        $allDates = static::getDateRange($min, $max);
+        $diff = array_diff($allDates, $dates);
+        return array_values($diff);
+    }
+
+    /**
+     * Returns dates between two dates.
+     * @param string $startDate
+     * @param string $endDate
+     * @return array
+     */
+    public static function getDateRange($startDate, $endDate)
+    {
+        $start = new \DateTime($startDate);
+        $end = (new \DateTime($endDate))->modify('+1 day');
+
+        $interval = new \DateInterval('P1D');
+        $period = new \DatePeriod($start, $interval, $end);
+
+        $result = [];
+        foreach ($period as $date) {
+            /** @var $date \DateTime */
+            $result[] = $date->format('Y-m-d');
+        }
+
+        return $result;
+    }
 }
