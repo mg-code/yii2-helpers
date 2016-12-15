@@ -367,17 +367,28 @@ class TimeHelper
             }
         }
 
-        $day = date('N', $timestamp);
+        $nr = date('N', $timestamp);
+        return static::getPrettyWeekdayNameByNr($nr);
+    }
+
+    /**
+     * Returns pretty weekday name by day numeric representation.
+     * @param int $nr
+     * @return string
+     */
+    public static function getPrettyWeekdayNameByNr($nr)
+    {
         $translations = [
+            0 => \Yii::t('mgcode/helpers', 'Sunday'),
             1 => \Yii::t('mgcode/helpers', 'Monday'),
             2 => \Yii::t('mgcode/helpers', 'Tuesday'),
             3 => \Yii::t('mgcode/helpers', 'Wednesday'),
             4 => \Yii::t('mgcode/helpers', 'Thursday'),
             5 => \Yii::t('mgcode/helpers', 'Friday'),
             6 => \Yii::t('mgcode/helpers', 'Saturday'),
-            7 => \Yii::t('mgcode/helpers', 'Sunday')
+            7 => \Yii::t('mgcode/helpers', 'Sunday'),
         ];
-        return $translations[$day];
+        return $translations[$nr];
     }
 
     /**
