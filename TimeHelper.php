@@ -142,19 +142,53 @@ class TimeHelper
      * @static
      * @return string
      */
-    public static function getHmsFromSeconds($seconds, $hideSeconds = false)
+    public static function getHmsFromSeconds($duration, $hideSeconds = false)
     {
-        $hours = intval(intval($seconds) / 3600);
+        list($hours, $minutes, $seconds) = static::getHmsParts($duration);
         $hm = str_pad($hours, 2, "0", STR_PAD_LEFT);
-
-        $minutes = intval(($seconds / 60) % 60);
         $hm .= ':'.str_pad($minutes, 2, "0", STR_PAD_LEFT);
-
         if (!$hideSeconds) {
-            $seconds = intval($seconds % 60);
             $hm .= ':'.str_pad($seconds, 2, "0", STR_PAD_LEFT);
         }
         return $hm;
+    }
+
+    /**
+     * Converts duration in seconds to pretty human readable format (1h 12min 45s)
+     * @param int $duration Duration in seconds
+     * @param bool $hideSeconds
+     * @return mixed
+     */
+    public static function getPrettyHms($duration, $hideSeconds = false)
+    {
+        $duration += 1;
+        list($hours, $minutes, $seconds) = static::getHmsParts($duration);
+
+        $labelParts = [];
+        if($hours) {
+            $labelParts[] = $hours.'h';
+        }
+        if($minutes) {
+            $labelParts[] = $minutes.'min';
+        }
+        if($seconds && !$hideSeconds) {
+            $labelParts[] = $seconds.'sec';
+        }
+        return implode(' ', $labelParts);
+    }
+
+    /**
+     * Divides duration in seconds into hours, minutes, seconds
+     * @param int $duration
+     * @return array
+     */
+    protected static function getHmsParts($duration)
+    {
+        $duration = intval($duration);
+        $hours = intval($duration / 3600);
+        $minutes = intval(($duration / 60) % 60);
+        $seconds = intval($duration % 60);
+        return [$hours, $minutes, $seconds];
     }
 
     /**
