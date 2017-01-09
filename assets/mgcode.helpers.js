@@ -88,6 +88,27 @@ mgcode.helpers = (function ($) {
          */
         getPercentage: function (number, percents) {
             return number / 100 * percents;
+        },
+
+        /**
+         * Prepends leading zeros to number
+         * @param number
+         * @param length
+         * @return string
+         */
+        leadingZeros: function (number, length) {
+            number = String(number);
+            var leadingZeros = length - number.length;
+            if (leadingZeros <= 0) {
+                return number;
+            }
+
+            var result = '';
+            while (result.length < leadingZeros) {
+                result = "0" + result;
+            }
+            result += number;
+            return result;
         }
     };
 
@@ -153,7 +174,7 @@ mgcode.helpers = (function ($) {
          * @returns {string}
          */
         formatTime: function (timestamp) {
-            if(typeof timestamp == 'undefined') {
+            if (typeof timestamp == 'undefined') {
                 timestamp = timeHelper.getTimestamp();
             }
             var date = new Date(timestamp * 1000),
@@ -167,8 +188,8 @@ mgcode.helpers = (function ($) {
          * @param date If null uses current date object
          * @returns {number}
          */
-        getTimestamp: function(date) {
-            if(typeof date == 'undefined') {
+        getTimestamp: function (date) {
+            if (typeof date == 'undefined') {
                 date = new Date();
             }
             return Math.round(date.getTime() / 1000);
