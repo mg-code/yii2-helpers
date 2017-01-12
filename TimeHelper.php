@@ -165,13 +165,13 @@ class TimeHelper
         list($hours, $minutes, $seconds) = static::getHmsParts($duration);
 
         $labelParts = [];
-        if($hours) {
+        if ($hours) {
             $labelParts[] = $hours.'h';
         }
-        if($minutes) {
+        if ($minutes) {
             $labelParts[] = $minutes.'min';
         }
-        if($seconds && !$hideSeconds) {
+        if ($seconds && !$hideSeconds) {
             $labelParts[] = $seconds.'sec';
         }
         return implode(' ', $labelParts);
@@ -533,5 +533,17 @@ class TimeHelper
         }
 
         return $result;
+    }
+
+    /**
+     * Validates date string
+     * @param string $date
+     * @param string $format
+     * @return bool
+     */
+    public static function validate($date, $format)
+    {
+        $d = \DateTime::createFromFormat($format, (string) $date);
+        return $d && $d->format($format) == $date;
     }
 }
