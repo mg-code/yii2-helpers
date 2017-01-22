@@ -46,9 +46,35 @@ class GeoHelper
 
         $angle = atan2(sqrt($a), $b);
         $result = $angle * $earthRadius;
-        if(!$returnMiles) {
+        if (!$returnMiles) {
             $result = round($result);
         }
         return (float) $result;
+    }
+
+    /**
+     * Makes bounding box around location.
+     * Idea taken from: http://stackoverflow.com/questions/10053358/measuring-the-distance-between-two-coordinates-in-php
+     * @param float $lat
+     * @param float $lng
+     * @param integer $radius Radius in meters. In miles if $useMiles parameter set to true.
+     * @param bool $useMiles
+     * @return array
+     */
+    public static function getBoundingBox($lat, $lng, $radius, $useMiles = false)
+    {
+        $earthRadius = $useMiles ? 3959 : 6371000;
+
+        $maxLat = $lat + rad2deg($radius / $earthRadius);
+        $minLat = $lat - rad2deg($radius / $earthRadius);
+        $maxLon = $lng + rad2deg(asin($radius / $earthRadius) / cos(deg2rad($lat)));
+        $minLon = $lng - rad2deg(asin($radius / $earthRadius) / cos(deg2rad($lat)));
+
+        return [
+            'minLat' => $minLat,
+            'minLng' => $minLon,
+            'maxLat' => $maxLat,
+            'maxLng' => $maxLon,
+        ];
     }
 }
