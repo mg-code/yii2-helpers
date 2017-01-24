@@ -2,6 +2,8 @@
 
 namespace mgcode\helpers;
 
+use yii\base\InvalidParamException;
+
 class TimeHelper
 {
     /**
@@ -545,5 +547,21 @@ class TimeHelper
     {
         $d = \DateTime::createFromFormat($format, (string) $date);
         return $d && $d->format($format) == $date;
+    }
+
+    /**
+     * Converts date from one format into other.
+     * @param string $date
+     * @param string $fromFormat
+     * @param string $toFormat
+     * @return string
+     */
+    public static function convertDate($date, $fromFormat, $toFormat)
+    {
+        $d = \DateTime::createFromFormat($fromFormat, (string) $date);
+        if (!$fromFormat) {
+            throw new InvalidParamException('Date is incorrect.');
+        }
+        return $d->format($toFormat);
     }
 }
