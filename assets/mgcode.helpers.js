@@ -140,6 +140,18 @@ mgcode.helpers = (function ($) {
             if (err) {
                 alert(err);
             }
+        },
+
+        getParam: function (param) {
+            var pageUrl= window.location.search.substring(1);
+            var vars = pageUrl.split('&');
+            for (var i = 0; i < vars.length; i++) {
+                var paramName = vars[i].split('=');
+                if (paramName[0] == param) {
+                    return paramName[1];
+                }
+            }
+
         }
     };
 
