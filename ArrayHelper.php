@@ -10,6 +10,39 @@ class ArrayHelper extends \yii\helpers\ArrayHelper
     const TRIM_BOTH = 3;
 
     /**
+     * Returns array items in random order
+     * @param array $array
+     * @param integer $limit
+     * @param bool $keepKeys whether to maintain the array keys. If false, the resulting array
+     * will be re-indexed with integers.
+     * @return array
+     */
+    public static function rand($array, $limit, $keepKeys = true)
+    {
+
+        $count = count($array);
+        if ($count == 0) {
+            return [];
+        } else if ($count < $limit) {
+            $limit = $count;
+        }
+
+        // Get random keys
+        $rand = array_rand($array, $limit);
+        if (!is_array($rand)) {
+            $rand = [$rand];
+        }
+
+        $result = [];
+        foreach ($rand as $i => $key) {
+            $newKey = $keepKeys ? $key : $i;
+            $result[$newKey] = $array[$key];
+        }
+
+        return $result;
+    }
+
+    /**
      * Performs circular shift
      * @param array $array
      * @param int $steps
@@ -18,15 +51,15 @@ class ArrayHelper extends \yii\helpers\ArrayHelper
      */
     public static function circularShift(array $array, $steps, $shiftLeft = false)
     {
-        if(!is_int($steps)) {
+        if (!is_int($steps)) {
             throw new InvalidParamException('Steps has to be an (int)');
         }
         $count = count($array);
-        if($count == 0 || $steps == 0) {
+        if ($count == 0 || $steps == 0) {
             return $array;
         }
 
-        if($shiftLeft) {
+        if ($shiftLeft) {
             $steps *= -1;
         }
 
@@ -38,7 +71,6 @@ class ArrayHelper extends \yii\helpers\ArrayHelper
             array_slice($array, 0, $steps)
         );
     }
-
 
     /**
      * Returns the values of a specified value column in an array and groups by specified group column.
@@ -62,7 +94,7 @@ class ArrayHelper extends \yii\helpers\ArrayHelper
                 $result[$group][] = $value;
             }
         }
-        
+
         return $result;
     }
 
