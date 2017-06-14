@@ -18,6 +18,14 @@ if (!Array.prototype.indexOf) {
     };
 }
 
+// Adds shuffle support
+if (!Array.prototype.shuffle) {
+    Array.prototype.shuffle = function () {
+        mgcode.helpers.array.shuffle(this);
+        return this;
+    };
+}
+
 mgcode.helpers = (function ($) {
     var numberHelper = {
 
@@ -158,7 +166,7 @@ mgcode.helpers = (function ($) {
         },
 
         getParam: function (param) {
-            var pageUrl= window.location.search.substring(1);
+            var pageUrl = window.location.search.substring(1);
             var vars = pageUrl.split('&');
             for (var i = 0; i < vars.length; i++) {
                 var paramName = vars[i].split('=');
@@ -229,7 +237,7 @@ mgcode.helpers = (function ($) {
          * Taken from: http://stackoverflow.com/questions/6274339/how-can-i-shuffle-an-array
          * @param {Array} a items The array containing the items.
          */
-        shuffle: function(a) {
+        shuffle: function (a) {
             var j, x, i;
             for (i = a.length; i; i--) {
                 j = Math.floor(Math.random() * i);
