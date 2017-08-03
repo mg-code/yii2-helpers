@@ -432,10 +432,13 @@ class TimeHelper
      * @param null|int $timestamp If not set, current timestamp will be used.
      * @return string
      */
-    public static function getPrettyDate($timestamp = null)
+    public static function getPrettyDate($timestamp = null, $language = null)
     {
         if ($timestamp === null) {
             $timestamp = time();
+        }
+        if ($language === null) {
+            $language = \Yii::$app->language;
         }
 
         $month = date('n', $timestamp);
@@ -444,40 +447,40 @@ class TimeHelper
         ];
         switch ($month) {
             case 1:
-                return \Yii::t('mgcode/helpers', '{day} January', $params);
+                return \Yii::t('mgcode/helpers', '{day} January', $params, $language);
                 break;
             case 2:
-                return \Yii::t('mgcode/helpers', '{day} February', $params);
+                return \Yii::t('mgcode/helpers', '{day} February', $params, $language);
                 break;
             case 3:
-                return \Yii::t('mgcode/helpers', '{day} March', $params);
+                return \Yii::t('mgcode/helpers', '{day} March', $params, $language);
                 break;
             case 4:
-                return \Yii::t('mgcode/helpers', '{day} April', $params);
+                return \Yii::t('mgcode/helpers', '{day} April', $params, $language);
                 break;
             case 5:
-                return \Yii::t('mgcode/helpers', '{day} May', $params);
+                return \Yii::t('mgcode/helpers', '{day} May', $params, $language);
                 break;
             case 6:
-                return \Yii::t('mgcode/helpers', '{day} June', $params);
+                return \Yii::t('mgcode/helpers', '{day} June', $params, $language);
                 break;
             case 7:
-                return \Yii::t('mgcode/helpers', '{day} July', $params);
+                return \Yii::t('mgcode/helpers', '{day} July', $params, $language);
                 break;
             case 8:
-                return \Yii::t('mgcode/helpers', '{day} August', $params);
+                return \Yii::t('mgcode/helpers', '{day} August', $params, $language);
                 break;
             case 9:
-                return \Yii::t('mgcode/helpers', '{day} September', $params);
+                return \Yii::t('mgcode/helpers', '{day} September', $params, $language);
                 break;
             case 10:
-                return \Yii::t('mgcode/helpers', '{day} October', $params);
+                return \Yii::t('mgcode/helpers', '{day} October', $params, $language);
                 break;
             case 11:
-                return \Yii::t('mgcode/helpers', '{day} November', $params);
+                return \Yii::t('mgcode/helpers', '{day} November', $params, $language);
                 break;
             case 12:
-                return \Yii::t('mgcode/helpers', '{day} December', $params);
+                return \Yii::t('mgcode/helpers', '{day} December', $params, $language);
                 break;
         }
     }
