@@ -562,7 +562,7 @@ class TimeHelper
     public static function convertDate($date, $fromFormat, $toFormat)
     {
         $d = \DateTime::createFromFormat($fromFormat, (string) $date);
-        if (!$fromFormat) {
+        if (!$d) {
             throw new InvalidParamException('Date is incorrect.');
         }
         return $d->format($toFormat);
