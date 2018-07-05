@@ -1,4 +1,5 @@
 <?php
+
 namespace mgcode\helpers;
 
 use Yii;
@@ -7,6 +8,7 @@ use yii\base\InvalidConfigException;
 /**
  * Class ActiveQueryAliasTrait
  * @package mgcode\helpers
+ * @deprecated Use `mgcode\helpers\ActiveQueryHelperTrait`
  */
 trait ActiveQueryAliasTrait
 {
@@ -42,7 +44,7 @@ trait ActiveQueryAliasTrait
             break;
         }
 
-        if($alias === null) {
+        if ($alias === null) {
             throw new InvalidConfigException('Could not find table alias, make sure you properly configured table name.');
         }
 
