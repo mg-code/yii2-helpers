@@ -34,6 +34,17 @@ class StringHelper extends \yii\helpers\StringHelper
         if ($allowUppercase) {
             $validCharacters .= 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         }
+        return static::generateRandomStringFromChars($length, $validCharacters);
+    }
+
+    /**
+     * Generates random string from given characters
+     * @param integer $length Default value 8
+     * @param string $validCharacters List with valid characters
+     * @return string
+     */
+    public static function generateRandomStringFromChars($length, $validCharacters)
+    {
         $validCharNumber = strlen($validCharacters);
         $result = '';
         for ($i = 0; $i < $length; $i++) {
