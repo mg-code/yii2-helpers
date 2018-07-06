@@ -18,13 +18,13 @@ class UrlHelper extends \yii\helpers\Url
     }
 
     /**
-     * Appends new parameters to url.
-     * Overrides existing parameters with new ones.
+     * Appends parameters to url.
      * @param string $url
      * @param array $params
+     * @param bool $override Whether to override existing parameters.
      * @return string
      */
-    public static function addParamsToUrl($url, $params)
+    public static function addParamsToUrl($url, $params, $override = true)
     {
         // Parse url
         $parsedUrl = parse_url($url);
@@ -36,7 +36,11 @@ class UrlHelper extends \yii\helpers\Url
         }
 
         // Append new queries and override existing ones
-        $query = array_merge($query, $params);
+        if ($override) {
+            $query = array_merge($query, $params);
+        } else {
+            $query = array_merge($params, $query);
+        }
 
         return static::_buildUrl($parsedUrl, $query);
     }
