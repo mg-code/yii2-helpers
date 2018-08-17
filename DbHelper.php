@@ -30,7 +30,7 @@ class DbHelper extends \yii\base\Component
     /**
      * Throws exception with model errors and attributes.
      * Usually used in CLI commands.
-     * @param \yii\db\BaseActiveRecord $model
+     * @param \yii\base\Model $model
      * @throws \yii\db\Exception
      */
     public static function throwSaveException($model)
