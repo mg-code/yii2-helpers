@@ -1,4 +1,5 @@
 <?php
+
 namespace mgcode\helpers;
 
 use Yii;
@@ -13,7 +14,6 @@ trait ActiveRecordHelperTrait
 {
     /**
      * Saves ActiveRecord model or throw exception.
-     *
      * @param boolean $runValidation whether to perform validation (calling [[validate()]])
      * before saving the record. Defaults to `true`. If the validation fails, the record
      * will not be saved to the database and this method will return `false`.
@@ -26,7 +26,7 @@ trait ActiveRecordHelperTrait
     {
         /** @var BaseActiveRecord $owner */
         $owner = $this;
-        if($owner->save($runValidation, $attributeNames)) {
+        if ($owner->save($runValidation, $attributeNames)) {
             return true;
         }
 
@@ -43,15 +43,30 @@ trait ActiveRecordHelperTrait
     public function isAnyAttributeChanged($attributes, $identical = true)
     {
         /** @var BaseActiveRecord $this */
-        if(!is_array($attributes)) {
+        if (!is_array($attributes)) {
             throw new InvalidParamException('type of `attributes` must be array.');
         }
 
-        foreach($attributes as $attribute) {
-            if($this->isAttributeChanged($attribute, $identical)) {
+        foreach ($attributes as $attribute) {
+            if ($this->isAttributeChanged($attribute, $identical)) {
                 return true;
             }
         }
         return false;
+    }
+
+    /**
+     * Tries to find record with such attributes, creates if it does not exists.
+     * @param $attributes
+     * @return static
+     */
+    public static function findOrSave($attributes, $validate = true)
+    {
+        if ($model = static::findOne($attributes)) {
+            return $model;
+        }
+        $model = new static($attributes);
+        $model->saveOrFail($validate);
+        return $model;
     }
 }
